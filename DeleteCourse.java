@@ -43,10 +43,7 @@ class DeleteCourse implements CourseOperation {
                     return;
                 }
                 currentUser[0].enrolledCourses.remove(course);
-
-                //退選後課程人數要+1
                 course.restquota++;
-                
                 System.out.println("Course removed.");
                 found = true;
                 break;
