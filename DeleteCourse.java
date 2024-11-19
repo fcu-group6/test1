@@ -22,9 +22,9 @@ class DeleteCourse implements CourseOperation {
         }
 
         System.out.print("Enter course ID to remove: ");
-        String target = scanner.nextLine().toLowerCase();
+        String courseId = scanner.nextLine().toLowerCase();
         
-        boolean courseExists = courses.stream().anyMatch(course -> course.id.toLowerCase().equals(target));
+        boolean courseExists = courses.stream().anyMatch(course -> course.id.toLowerCase().equals(courseId));
         if (!courseExists) 
         {
             System.out.println("This class doesn't exist");
@@ -34,7 +34,7 @@ class DeleteCourse implements CourseOperation {
         boolean found = false;
         for (Course course : currentUser[0].enrolledCourses) 
         {
-            if (course.id.toLowerCase().equals(target)) 
+            if (course.id.toLowerCase().equals(courseId)) 
             {
                 if (course.attr == "required") 
                 {
@@ -43,6 +43,10 @@ class DeleteCourse implements CourseOperation {
                     return;
                 }
                 currentUser[0].enrolledCourses.remove(course);
+
+                //退選後課程人數要+1
+                course.restquota++;
+                
                 System.out.println("Course removed.");
                 found = true;
                 break;
