@@ -57,7 +57,7 @@ class AddCourse implements CourseOperation {
                     }
 
                     // 檢查課程剩餘名額
-                    if (course.restquota < 0) {
+                    if (course.restquota <= 0) {
                        
                         System.out.println("This course does not have enough quota.");
                         return;
