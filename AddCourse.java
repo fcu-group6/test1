@@ -38,7 +38,7 @@ class AddCourse implements CourseOperation {
             // 修改為忽略大小寫的比較
             if (course.id.equalsIgnoreCase(courseId)) {
                 // 檢查課程是否為必修
-                if ("required".equalsIgnoreCase(course.syllabus.getCourseCategory())) {
+                if ("required".equalsIgnoreCase(course.attr)) {
                     System.out.println("The course is required. No need to add it manually.");
                     return;
                 }
@@ -57,13 +57,12 @@ class AddCourse implements CourseOperation {
                     }
 
                     // 檢查課程剩餘名額
-                    if (course.restquota > 0) {
-                        course.restquota--;
-                    } else {
+                    if (course.restquota <= 0) {
+                       
                         System.out.println("This course does not have enough quota.");
                         return;
-                    }
-
+                    } 
+                    
                     // 檢查是否衝堂
                     if (timeConflict(exist, course)) {
                         flag = 1;
@@ -73,6 +72,7 @@ class AddCourse implements CourseOperation {
                 // 確認可以選課
                 if (flag == 0) {
                     currentUser[0].enrolledCourses.add(course);
+                    course.restquota--;
                     System.out.println("Successfully enrolled in " + course.name);
                 } else {
                     System.out.println("Course enrollment failed due to a schedule conflict.");
